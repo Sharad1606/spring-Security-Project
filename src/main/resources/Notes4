@@ -1,0 +1,55 @@
+JOT/JWT/Json(JavaScript notation object) Web Token:=> A JSON token that is used on web for authentication.
+
+-> As we maintain Session to login once and use the same session throughout the application resources.
+like - SSO(Single Sign On)-> GMAIL, GMeet, GDrive, etc...
+
+But maintaining the same session for authentication may lead to threat of CSRF(Cross site req forgery).
+
+=> Here comes JWT not XMLToken as they are bulky itself even after compression.
+""""It is provided by server/ app/ web resources at the first call to server which
+must/might be the login one except some open resources..""""
+
+JWT Token => header( algo like HS(hMac)/RS(RSA), type: JWT ) + Body(sub,name,issue_Time,expiry_time) + signature
+RSA and ES are Asymmetric key-cryptography(Use public key + private key concept)
+HS -> Symmetric key same key
+
+For, Creating signature we use cryptography either symmetric or Asymmetric algo...
+
+
+Note: We do sent JWT over internet with request so everyone can see that.
+=> It not ensure secrecy as it is visible and can be decoded using online tools
+=> but provide accountability as ""no one can use it without signature/stamp""....
+
+We can also secure token(JWT) using https instead of http => so we can achieve both secrecy and accountability...
+=============================================================
+
+Working=>
+
+1. Client login-----> Server
+               <-----JWT Token
+All..
+   Client  req + JWT ------->
+                      <-------validate and send res
+
+Steps:
+
+ 1. create & validate tokens using classes and interfaces => ALL of same version
+  libraries JJWT API, JJWT IMPL(Implementation), JJWT Jackson converter
+ -> At Org level these APIs etc are pre-decided by arch team..
+ 2. Add layers like Authentication providers (obj goes to the server)->
+    for JWT we work directly with Authentication Manager(works behind) authenticates
+    =>we work directly with Authentication Manager means we have to create bean for it. or manually create obj wherever needed..
+    And return its object to use throughout appl
+=====================================================================
+Till now we are having the register implementation, but for login flow it is default
+Here for JWT-> we need to have our own login flow as well
+
+======================================================================
+So we need to pass valid username & pass for login then from next others
+we don't require to pass them but bearer token/JWTToken of login res
+
+==> till now we were having """default authentication based on user/pass filter authentication layer"""
+one of the filter layer comes before the dispatcher while having spring-security in project.
+==>
+Now we want JWT filter instead of this user/pass filter except for login
+-> apply JWT filter before the user/pass filter using addFilterBefore()/after() methods.

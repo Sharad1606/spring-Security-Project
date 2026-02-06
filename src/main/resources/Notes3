@@ -1,0 +1,24 @@
+//password security=> encode while storing in DB and decode while authenticating the user with plain text password
+
+
+1. plain text from user ->>
+encrypt it using cryptography(using public & private key concept) => cypher text.
+decrypt it -> plain text.
+Issue: If the key get leaked -> all the users password will be stolen as they've been encrypted using same key
+
+2. Instead of cypher text create hash for password using hashing algo( SHA, MD5)
+-> we can get the hashed text from plain but not vise-versa.
+-> SHA256 -> we can use these algo only once over the text to get hash
+
+3. Instead of these simple hashing algo which can be applied once, we can use BCrypt algo
+commonly k/a BCrypt password => many open sited are also there on internet.
+Spring security have supports for this.
+Working: creates hash of hash till the strength desired like 1,2,3,4....
+
+   =>plain -> hash1 -> hash2 -> hash3 ......
+
+
+  ==> Use BCrypt Library while user register and bcrypt while user get authenticated
+
+  We get BCrypt object while using springSecurity
+  => ways to get obj -> config @Bean or hardcode it where you need.

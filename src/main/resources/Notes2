@@ -1,0 +1,21 @@
+As the user/pass is taken by FilterChain named user/pass-authenticationFilter
+it have default access to app.properties file to get those.
+And then get it verified by "UserDetailsService".
+
+=> We can customize these...//take from db and verify the way we want not from application.properties file
+
+The UserDetails and userDetailsService are itself an interface so we cant use its object
+so use an pre-defined class(InMemoryUserDetailsManager) or create ur own to return object for the same.
+User is class that implements UserDetails
+
+To store password we have to use password encoder while username in plainText
+==================================XXXXXXXXXXXXXXXXXXXX=============================
+
+Concepts:
+ when we pass user/pass from clients it is received as unauthenticated obj by server  goes to
+=> authent provider (UserDetailsService runs behind scene and works with prop file)-> authenticated obj
+=> we can customize this to connected with LDAP service or database(we have diff providers)
+
+When class implements an interface it has to define all its methods but inteface don't needed as they extends
+=> Spring container provides objects of classes/interfaces( via internal class implementation.
+So always create repo as interface in springboot to use JPARepo interface..
